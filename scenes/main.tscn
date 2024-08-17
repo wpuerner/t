@@ -12,7 +12,7 @@
 script = ExtResource("1_sylqq")
 
 [node name="T" parent="." instance=ExtResource("2_5ynkg")]
-position = Vector2(248, 277)
+position = Vector2(250, 238)
 key_sprite_texture = ExtResource("3_14enn")
 
 [node name="S" parent="." instance=ExtResource("2_5ynkg")]
@@ -23,7 +23,7 @@ key_sprite_texture = ExtResource("4_rolbi")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="LeftHand" parent="." instance=ExtResource("4_u1mty")]
-position = Vector2(247, 279)
+position = Vector2(249, 234)
 
 [node name="LevelNumber" parent="." instance=ExtResource("9_k6c3f")]
 z_index = -2
@@ -31,4 +31,4 @@ mouse_filter = 2
 
 [node name="MeasureNumber" parent="." instance=ExtResource("7_sqj8x")]
 z_index = -1
-position = Vector2(248, 300.695)
+position = Vector2(250, 251)
