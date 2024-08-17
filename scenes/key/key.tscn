@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://ch246int2jhqm"]
+
+[ext_resource type="Texture2D" uid="uid://clq16f8x1jind" path="res://assets/key_scrim.png" id="2_ojgfa"]
+[ext_resource type="Texture2D" uid="uid://df5snddgr4p4m" path="res://assets/t_key.png" id="2_rpujq"]
+[ext_resource type="Script" path="res://scenes/key/key.gd" id="2_wkfm0"]
+
+[sub_resource type="Animation" id="Animation_pgaut"]
+resource_name = "good"
+length = 0.25
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("KeySprite:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KeySprite:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.05, 0, 10.405, -0.05, 0, 0.05, 0, 0, -0.05, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.0387496, 0.200529)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_avrqb"]
+_data = {
+"good": SubResource("Animation_pgaut")
+}
+
+[node name="Key" type="Node2D"]
+script = ExtResource("2_wkfm0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_avrqb")
+}
+
+[node name="KeySprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_rpujq")
+
+[node name="KeyScrim" type="Sprite2D" parent="."]
+position = Vector2(0, 29.745)
+texture = ExtResource("2_ojgfa")

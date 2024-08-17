@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh5i5k4x644hk"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_sylqq"]
+[ext_resource type="PackedScene" uid="uid://ch246int2jhqm" path="res://scenes/key/key.tscn" id="2_5ynkg"]
+[ext_resource type="Texture2D" uid="uid://df5snddgr4p4m" path="res://assets/t_key.png" id="3_14enn"]
+[ext_resource type="Texture2D" uid="uid://dgn3rlcv8qatv" path="res://assets/s_key.png" id="4_rolbi"]
+[ext_resource type="PackedScene" uid="uid://dgduojk1pq0rj" path="res://scenes/hand/hand.tscn" id="4_u1mty"]
+[ext_resource type="PackedScene" uid="uid://d33qvy7pddp52" path="res://scenes/measure_number/measure_number.tscn" id="7_sqj8x"]
+[ext_resource type="PackedScene" uid="uid://menmcythox1n" path="res://scenes/level_number/level_number.tscn" id="9_k6c3f"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_sylqq")
+
+[node name="T" parent="." instance=ExtResource("2_5ynkg")]
+position = Vector2(248, 277)
+key_sprite_texture = ExtResource("3_14enn")
+
+[node name="S" parent="." instance=ExtResource("2_5ynkg")]
+visible = false
+position = Vector2(134, 266)
+key_sprite_texture = ExtResource("4_rolbi")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="LeftHand" parent="." instance=ExtResource("4_u1mty")]
+position = Vector2(247, 279)
+
+[node name="LevelNumber" parent="." instance=ExtResource("9_k6c3f")]
+z_index = -2
+mouse_filter = 2
+
+[node name="MeasureNumber" parent="." instance=ExtResource("7_sqj8x")]
+z_index = -1
+position = Vector2(248, 300.695)
