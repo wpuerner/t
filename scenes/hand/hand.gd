@@ -10,7 +10,5 @@ var note_time_msec: float:
 		note_played = false
 var note_played: bool
 
-func _physics_process(_delta):
-	if Time.get_ticks_msec() > note_time_msec - WIND_UP_TIME_MSEC and !note_played:
-		animation_player.play("tap")
-		note_played = true
+func tap():
+	animation_player.play("tap")
