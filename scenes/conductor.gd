@@ -2,6 +2,7 @@ extends AudioStreamPlayer
 
 const BPM: int = 120
 const SECONDS_PER_BEAT: float = 60.0 / BPM
+const MEASURE_LENGTH_SECONDS: float = SECONDS_PER_BEAT * 4.0
 const LOOPS: Array[Resource] = [
 	preload("res://assets/loop_1.wav"),
 	preload("res://assets/loop_2.wav"),
@@ -43,14 +44,20 @@ func queue_loop(index: int):
 func get_closest_beat(beats: PackedFloat32Array):
 	var current_beat = _get_beat()
 	var closest
+	if beats.has(0.0):
+		beats.append(4.0)
 	for beat in beats:
-		if beat == 0.0: beat = 4.0
 		if closest == null or abs(current_beat - beat) < abs(current_beat - closest):
 			closest = beat
 	return 0.0 if closest == 4.0 else closest
 
+# Gets time to the nearest provided beat
+# e.g. if time to beat 1 in this measure is -1.0 seconds, but the time to the beat 1 
+#   in the next measure is 0.5 seconds, take the beat to the next measure
 func get_time_to_beat(beat: float) -> float:
-	return (beat - _get_beat()) / SECONDS_PER_BEAT
+	var time: float = (beat - _get_beat()) * SECONDS_PER_BEAT
+	var adjusted_time: float = time + MEASURE_LENGTH_SECONDS if time < 0 else time - MEASURE_LENGTH_SECONDS
+	return adjusted_time if abs(adjusted_time) < abs(time) else time
 	
 func register_callback(beats: Array[float], offset_sec: float, callable: Callable):
 	for beat in beats:
