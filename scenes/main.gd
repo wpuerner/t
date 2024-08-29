@@ -8,7 +8,7 @@ extends Node
 @onready var measure_number = $MeasureNumber
 @onready var conductor = $Conductor
 
-const HIT_THRESHOLD_SECS: float = 0.3
+const HIT_THRESHOLD_SECS: float = 0.15
 
 var level: int = 0:
 	set(value):
@@ -20,11 +20,11 @@ var measure: int = 0:
 	set(value):
 		measure = value
 		measure_number.set_measure_number(measure)
-var t_npc_beats = [[0.0, 1.0, 2.0], [0.0, 2.0], [1.0, 2.0, 3.0], [0.0, 3.0], [], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 2.0, 3.0]]
-var t_player_beats = [[3.0], [1.0, 3.0], [0.0], [1.0, 2.0], [0.0, 1.0, 2.0, 3.0], [], [], [], [], []]
+var t_npc_beats = [[0.0, 1.0, 2.0], [0.0, 2.0, 3.0], [0.0, 1.0, 3.0], [0.0, 3.0], [1.0, 2.0, 3.0], [0.0, 2.0], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 3.0], [1.0, 2.0], [1.0]]
+var t_player_beats = [[3.0], [1.0], [2.0], [1.0, 2.0], [0.0], [1.0, 3.0], [], [2.0], [0.0, 3.0], [0.0, 2.0, 3.0]]
 var t_last_played_beat = -1
-var s_npc_beats = [[], [], [], [], [], [], [0.5, 1.5, 2.5, 3.5], [0.5, 1.5, 2.5, 3.5], [0.5, 1.5, 2.5, 3.5], [0.5, 1.5, 2.5, 3.5]]
-var s_player_beats = [[], [], [], [], [], [], [], [], [], []]
+var s_npc_beats = [[], [], [], [], [], [], [0.5, 1.5, 2.5], [0.5, 2.5, 3.5], [1.5, 2.5], [2.5]]
+var s_player_beats = [[], [], [], [], [], [], [3.5], [1.5], [0.5, 3.5], [0.5, 1.5, 3.5]]
 var s_last_played_beat = -1
 var s_key_active: bool = false:
 	set(value):
@@ -38,7 +38,8 @@ func _ready():
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), HIT_THRESHOLD_SECS, _check_t_beat)
 	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), -0.05, _right_hand_tap_callable)
 	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), 0, _s_key_callable)
-	conductor.register_callback(PackedFloat32Array([4]), -0.1, _check_measure)
+	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), HIT_THRESHOLD_SECS, _check_s_beat)
+	conductor.register_callback(PackedFloat32Array([4]), -0.09, _check_measure)
 	conductor.start()
 
 func _left_hand_tap_callable(beat: float):
@@ -57,11 +58,16 @@ func _right_hand_tap_callable(beat: float):
 	if !s_key_active: return
 	if s_npc_beats[level].has(beat):
 		right_hand.tap()
-		
+
 func _s_key_callable(beat: float):
 	if !s_key_active: return
 	if s_npc_beats[level].has(beat):
 		s_key.play_key()
+		
+func _check_s_beat(beat: float):
+	if !s_key_active: return
+	if s_player_beats[level].has(beat) and s_last_played_beat != beat:
+		good_measure = false
 
 func _check_measure(_beat):
 	if good_measure:
@@ -74,6 +80,7 @@ func _check_measure(_beat):
 		level = level - 1 if level > 0 else 0
 	good_measure = true
 	t_last_played_beat = -1
+	s_last_played_beat = -1
 	
 func _input(event: InputEvent):
 	if event.is_action_pressed("t"):
@@ -85,6 +92,15 @@ func _input(event: InputEvent):
 		else:
 			t_key.play_key()
 			t_last_played_beat = closest_beat
+	elif event.is_action_pressed("s"):
+		var closest_beat: float = conductor.get_closest_beat(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]))
+		var time = conductor.get_time_to_beat(closest_beat)
+		if !s_player_beats[level].has(closest_beat) or !abs(conductor.get_time_to_beat(closest_beat)) < HIT_THRESHOLD_SECS:
+			good_measure = false
+			return
+		else:
+			s_key.play_key()
+			s_last_played_beat = closest_beat
 
 func _update_s_key_state(is_active: bool):
 	var tween = create_tween()
