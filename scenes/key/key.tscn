@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ch246int2jhqm"]
+[gd_scene load_steps=8 format=3 uid="uid://ch246int2jhqm"]
 
 [ext_resource type="Texture2D" uid="uid://cyoaf5s7mfpuo" path="res://assets/mask.png" id="2_ckn5m"]
 [ext_resource type="Texture2D" uid="uid://clq16f8x1jind" path="res://assets/key_scrim.png" id="2_ojgfa"]
@@ -31,9 +31,36 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.0387496, 0.200529)
 }
 
+[sub_resource type="Animation" id="Animation_mj1vk"]
+resource_name = "wiggle"
+length = 0.25
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mask:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.05, 0, -3.5, -0.05, 0, 0.05, 0, 3.5, -0.05, 0, 0.05, 0, 0, -0.05, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.075, 0.125, 0.2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("Mask:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_avrqb"]
 _data = {
-"good": SubResource("Animation_pgaut")
+"good": SubResource("Animation_pgaut"),
+"wiggle": SubResource("Animation_mj1vk")
 }
 
 [node name="Key" type="Node2D"]
@@ -50,7 +77,7 @@ position = Vector2(0, 30)
 texture = ExtResource("2_ckn5m")
 
 [node name="KeySprite" type="Sprite2D" parent="Mask"]
-position = Vector2(0, -30)
+position = Vector2(-0.12, -30)
 texture = ExtResource("2_rpujq")
 
 [node name="KeyScrim" type="Sprite2D" parent="Mask"]

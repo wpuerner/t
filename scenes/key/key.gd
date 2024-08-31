@@ -10,3 +10,6 @@ extends Node2D
 
 func play_key():
 	animation_player.play("good")
+
+func wiggle():
+	animation_player.play("wiggle")
