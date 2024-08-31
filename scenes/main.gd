@@ -55,8 +55,9 @@ func _t_key_callable(beat: float):
 
 func _check_t_beat(beat: float):
 	if t_player_beats[level].has(beat) and t_last_played_beat != beat:
+		if good_measure: _instantiate_red_x(t_key.global_position)
 		good_measure = false
-		
+
 func _right_hand_tap_callable(beat: float):
 	if !s_key_active: return
 	if s_npc_beats[level].has(beat):
@@ -70,6 +71,7 @@ func _s_key_callable(beat: float):
 func _check_s_beat(beat: float):
 	if !s_key_active: return
 	if s_player_beats[level].has(beat) and s_last_played_beat != beat:
+		if good_measure: _instantiate_red_x(s_key.global_position)
 		good_measure = false
 
 func _check_measure(_beat):
@@ -88,25 +90,37 @@ func _check_measure(_beat):
 func _input(event: InputEvent):
 	if event.is_action_pressed("t"):
 		var closest_beat: float = conductor.get_closest_beat(PackedFloat32Array([0.0, 1.0, 2.0, 3.0]))
-		var time = conductor.get_time_to_beat(closest_beat)
 		if !t_player_beats[level].has(closest_beat) or !abs(conductor.get_time_to_beat(closest_beat)) < HIT_THRESHOLD_SECS:
+			if good_measure: _instantiate_red_x(t_key.global_position)
 			good_measure = false
 			return
 		else:
 			t_key.play_key()
 			t_last_played_beat = closest_beat
+			_instantiate_green_circle(t_key.global_position)
 	elif event.is_action_pressed("s"):
 		var closest_beat: float = conductor.get_closest_beat(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]))
-		var time = conductor.get_time_to_beat(closest_beat)
 		if !s_player_beats[level].has(closest_beat) or !abs(conductor.get_time_to_beat(closest_beat)) < HIT_THRESHOLD_SECS:
+			if good_measure: _instantiate_red_x(s_key.global_position)
 			good_measure = false
 			return
 		else:
 			s_key.play_key()
 			s_last_played_beat = closest_beat
+			_instantiate_green_circle(s_key.global_position)
 
 func _update_s_key_state(is_active: bool):
 	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(right_hand, "position", Vector2(150, 270) if is_active else Vector2(0, 270), 0.1)
 	tween.tween_property(s_key, "scale", Vector2.ONE if is_active else Vector2.ZERO, 0.1)
+
+func _instantiate_red_x(instantiate_at: Vector2):
+	var node = preload("res://scenes/effects/red_x/red_x.tscn").instantiate()
+	node.global_position = instantiate_at
+	add_child(node)
+
+func _instantiate_green_circle(instantiate_at: Vector2):
+	var node = preload("res://scenes/effects/green_circle/green_circle.tscn").instantiate()
+	node.global_position = instantiate_at
+	add_child(node)

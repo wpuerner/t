@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnddar3mcoa6v"]
+
+[ext_resource type="Texture2D" uid="uid://donc85elct8n8" path="res://assets/red_x.png" id="1_lmecr"]
+[ext_resource type="Script" path="res://scenes/effects/red_x/red_x.gd" id="2_4j4e4"]
+
+[node name="RedX" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_lmecr")
+script = ExtResource("2_4j4e4")

@@ -3,8 +3,12 @@
 [ext_resource type="Script" path="res://scenes/measure_number/measure_number.gd" id="1_4ohqg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xoux1"]
-bg_color = Color(1, 0, 0, 1)
-border_color = Color(0.8, 0.8, 0.8, 0)
+bg_color = Color(1, 0.583333, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.75, 0.4, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 60
