@@ -1,6 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://b3fgfe6lrac76"]
+[gd_scene load_steps=9 format=3 uid="uid://b3fgfe6lrac76"]
 
 [ext_resource type="Script" path="res://scenes/level_number/level_number_panel_container.gd" id="1_ejlas"]
+[ext_resource type="Texture2D" uid="uid://krlu1rjkq8k4" path="res://assets/confetti.png" id="2_tirqo"]
+
+[sub_resource type="Gradient" id="Gradient_ighlu"]
+offsets = PackedFloat32Array(0, 0.511111, 1)
+colors = PackedColorArray(1, 0.588235, 0, 1, 0.847059, 0.027451, 0.905882, 1, 0, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qxo6b"]
 bg_color = Color(1, 1, 1, 1)
@@ -96,6 +101,24 @@ _data = {
 offset_right = 60.0
 offset_bottom = 40.0
 script = ExtResource("1_ejlas")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(30, 106)
+emitting = false
+amount = 10
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.7
+texture = ExtResource("2_tirqo")
+emission_shape = 3
+emission_rect_extents = Vector2(10, 10)
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 223.4
+initial_velocity_max = 308.51
+angle_min = -99.5
+angle_max = 278.0
+color_initial_ramp = SubResource("Gradient_ighlu")
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(40, 0)
