@@ -13,18 +13,25 @@ const LOOPS: Array[Resource] = [
 	preload("res://assets/loop_7.wav"),
 	preload("res://assets/loop_8.wav"),
 	preload("res://assets/loop_9.wav"),
-	preload("res://assets/loop_10.wav")
+	preload("res://assets/loop_10.wav"),
+	preload("res://assets/loop_final.wav")
 ]
 
 var loop_index: int = 0
 var callbacks: Array[Callback]
 var callbacks_index: int = 0
+var queue_stop: bool = false
+var stopped: bool = false
 
 func start():
 	callbacks.sort_custom(func(a: Callback, b: Callback): return a.trigger_at < b.trigger_at)
 	finished.connect(_handle_looping)
 	stream = LOOPS[loop_index]
 	play()
+	
+func done():
+	set_physics_process(false)
+	queue_stop = true
 
 func _physics_process(_delta):
 	var beat = _get_beat()
@@ -34,9 +41,12 @@ func _physics_process(_delta):
 		callbacks_index += 1
 
 func _handle_looping():
+	if stopped: return
 	callbacks_index = 0
 	stream = LOOPS[loop_index]
 	play()
+	if queue_stop:
+		stopped = true
 
 func queue_loop(index: int):
 	loop_index = index

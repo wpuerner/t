@@ -7,30 +7,36 @@ extends Node
 @onready var level_number: Control = $LevelNumber
 @onready var measure_number = $MeasureNumber
 @onready var conductor = $Conductor
+@onready var end_game_screen = $EndGame
 
 const HIT_THRESHOLD_SECS: float = 0.15
 
-var level: int = 0:
+var level: int = 9:
 	set(value):
 		level = value
 		level_number.set_level_number(level)
 		conductor.queue_loop(level)
+		if level > 9:
+			_end_game()
 		s_key_active = level > 5
 var measure: int = 0:
 	set(value):
 		measure = value
 		measure_number.set_measure_number(measure)
-var t_npc_beats = [[0.0, 1.0, 2.0], [0.0, 2.0, 3.0], [0.0, 1.0, 3.0], [0.0, 3.0], [1.0, 2.0, 3.0], [0.0, 2.0], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 3.0], [1.0, 2.0], [1.0]]
-var t_player_beats = [[3.0], [1.0], [2.0], [1.0, 2.0], [0.0], [1.0, 3.0], [], [2.0], [0.0, 3.0], [0.0, 2.0, 3.0]]
+var t_npc_beats = [[0.0, 1.0, 2.0], [0.0, 2.0, 3.0], [0.0, 1.0, 3.0], [0.0, 3.0], [1.0, 2.0, 3.0], [0.0, 2.0], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 3.0], [1.0, 2.0], [1.0], []]
+var t_player_beats = [[3.0], [1.0], [2.0], [1.0, 2.0], [0.0], [1.0, 3.0], [], [2.0], [0.0, 3.0], [0.0, 2.0, 3.0], []]
 var t_last_played_beat = -1
-var s_npc_beats = [[], [], [], [], [], [], [0.5, 1.5, 2.5], [0.5, 2.5, 3.5], [1.5, 2.5], [2.5]]
-var s_player_beats = [[], [], [], [], [], [], [3.5], [1.5], [0.5, 3.5], [0.5, 1.5, 3.5]]
+var s_npc_beats = [[], [], [], [], [], [], [0.5, 1.5, 2.5], [0.5, 2.5, 3.5], [1.5, 2.5], [2.5], []]
+var s_player_beats = [[], [], [], [], [], [], [3.5], [1.5], [0.5, 3.5], [0.5, 1.5, 3.5], []]
 var s_last_played_beat = -1
 var s_key_active: bool = false:
 	set(value):
 		s_key_active = value
 		_update_s_key_state(s_key_active)
-var good_measure: bool = true
+var good_measure: bool = true:
+	set(v):
+		good_measure = true
+var total_beats: int = 0
 
 func _ready():
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.2, _twitch)
@@ -53,6 +59,7 @@ func _left_hand_tap_callable(beat: float):
 		left_hand.tap()
 
 func _t_key_callable(beat: float):
+	total_beats += 1
 	if t_npc_beats[level].has(beat):
 		t_key.play_key()
 
@@ -139,3 +146,8 @@ func _on_texture_button_pressed():
 	level_number.initialize()
 	await get_tree().create_timer(2.0).timeout
 	conductor.start()
+
+func _end_game():
+	end_game_screen.set_num_beats(total_beats)
+	end_game_screen.activate()
+	conductor.done()
