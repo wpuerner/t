@@ -1,14 +1,27 @@
 extends Control
 
-var level_number: int = 0
+@export var gradient: Gradient
 
-func set_level_number(value):
-	if value > level_number:
-		find_child(str("Panel",value)).modulate = Color.WHITE
-	elif level_number > 0:
-		find_child(str("Panel",level_number)).modulate = Color.TRANSPARENT
-	level_number = value
+@onready var h_box_container: HBoxContainer = $HBoxContainer
+@onready var num_panels = h_box_container.get_child_count()
 
 func _ready():
-	for child in $VBoxContainer.get_children():
-		child.modulate = Color.TRANSPARENT
+	for i in range(num_panels):
+		_get_panel(i).color = gradient.sample(float(i)/float(num_panels))
+	set_level_number(0)
+
+func set_level_number(value):
+	for i in range(num_panels):
+		var panel = _get_panel(i)
+		if i <= value and !panel.is_active:
+			panel.activate()
+		elif i > value and panel.is_active:
+			panel.deactivate()
+
+func bump():
+	for i in range(num_panels):
+		var panel = _get_panel(i)
+		if panel.is_active: panel.bump()
+
+func _get_panel(panel_number: int):
+	return h_box_container.get_node(str("LevelNumberPanelContainer", panel_number))

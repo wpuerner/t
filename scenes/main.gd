@@ -33,7 +33,7 @@ var s_key_active: bool = false:
 var good_measure: bool = true
 
 func _ready():
-	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.2, func(_beat): measure_number.twitch())
+	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.2, _twitch)
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.05, _left_hand_tap_callable)
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.25, func(beat): if t_player_beats[level].has(beat): t_key.wiggle())
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), 0, _t_key_callable)
@@ -44,6 +44,10 @@ func _ready():
 	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), HIT_THRESHOLD_SECS, _check_s_beat)
 	conductor.register_callback(PackedFloat32Array([4]), -0.09, _check_measure)
 	conductor.start()
+
+func _twitch(_beat):
+	measure_number.twitch()
+	level_number.bump()
 
 func _left_hand_tap_callable(beat: float):
 	if t_npc_beats[level].has(beat):

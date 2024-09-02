@@ -1,33 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://menmcythox1n"]
+[gd_scene load_steps=4 format=3 uid="uid://menmcythox1n"]
 
 [ext_resource type="Script" path="res://scenes/level_number/level_number.gd" id="2_ly1gu"]
+[ext_resource type="PackedScene" uid="uid://b3fgfe6lrac76" path="res://scenes/level_number/level_number_panel_container.tscn" id="2_xj10n"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_va1bg"]
-bg_color = Color(1, 0.716667, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5bpt"]
-bg_color = Color(1, 0.919167, 0.03, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hd5g"]
-bg_color = Color(0.766667, 1, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uu3wa"]
-bg_color = Color(0.45, 1, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tjacx"]
-bg_color = Color(0, 0.92, 0.0153333, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1yqs"]
-bg_color = Color(0, 1, 0.65, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pe6e7"]
-bg_color = Color(0, 0.766667, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhr50"]
-bg_color = Color(0.266667, 0, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eus4k"]
-bg_color = Color(0.678, 0.31, 1, 1)
+[sub_resource type="Gradient" id="Gradient_3m17c"]
+offsets = PackedFloat32Array(0, 0.301075, 0.650538, 1)
+colors = PackedColorArray(1, 0.55, 0, 1, 0.866667, 1, 0, 1, 0.15, 1, 0, 1, 0, 1, 0.95, 1)
 
 [node name="LevelNumber" type="Control"]
 layout_mode = 3
@@ -37,57 +15,55 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ly1gu")
+gradient = SubResource("Gradient_3m17c")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 382.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
+alignment = 1
 
-[node name="Panel9" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer0" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_va1bg")
+size_flags_horizontal = 3
 
-[node name="Panel8" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer1" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_x5bpt")
+size_flags_horizontal = 3
 
-[node name="Panel7" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer2" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_1hd5g")
+size_flags_horizontal = 3
 
-[node name="Panel6" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer3" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_uu3wa")
+size_flags_horizontal = 3
 
-[node name="Panel5" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer4" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_tjacx")
+size_flags_horizontal = 3
 
-[node name="Panel4" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer5" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_s1yqs")
+size_flags_horizontal = 3
 
-[node name="Panel3" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer6" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_pe6e7")
+size_flags_horizontal = 3
 
-[node name="Panel2" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer7" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_yhr50")
+size_flags_horizontal = 3
 
-[node name="Panel1" type="Panel" parent="VBoxContainer"]
+[node name="LevelNumberPanelContainer8" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_eus4k")
+size_flags_horizontal = 3
+
+[node name="LevelNumberPanelContainer9" parent="HBoxContainer" instance=ExtResource("2_xj10n")]
+layout_mode = 2
+size_flags_horizontal = 3
