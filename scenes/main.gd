@@ -43,7 +43,6 @@ func _ready():
 	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), 0, _s_key_callable)
 	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), HIT_THRESHOLD_SECS, _check_s_beat)
 	conductor.register_callback(PackedFloat32Array([4]), -0.09, _check_measure)
-	conductor.start()
 
 func _twitch(_beat):
 	measure_number.twitch()
@@ -128,3 +127,15 @@ func _instantiate_green_circle(instantiate_at: Vector2):
 	var node = preload("res://scenes/effects/green_circle/green_circle.tscn").instantiate()
 	node.global_position = instantiate_at
 	add_child(node)
+
+
+func _on_texture_button_pressed():
+	find_child("TextureButton").visible = false
+	var tween: Tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(left_hand, "position", Vector2(250, 240), 1.0)
+	tween.tween_property(measure_number, "scale", Vector2.ONE, 1.0)
+	tween.tween_property(t_key, "scale", Vector2.ONE, 1.0)
+	level_number.initialize()
+	await get_tree().create_timer(2.0).timeout
+	conductor.start()

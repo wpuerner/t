@@ -8,7 +8,6 @@ extends Control
 func _ready():
 	for i in range(num_panels):
 		_get_panel(i).color = gradient.sample(float(i)/float(num_panels))
-	set_level_number(0)
 
 func set_level_number(value):
 	for i in range(num_panels):
@@ -25,3 +24,9 @@ func bump():
 
 func _get_panel(panel_number: int):
 	return h_box_container.get_node(str("LevelNumberPanelContainer", panel_number))
+
+func initialize():
+	for i in range(num_panels):
+		_get_panel(i).initialize()
+		await get_tree().create_timer(0.08).timeout
+	set_level_number(0)

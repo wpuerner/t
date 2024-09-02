@@ -126,7 +126,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Panel" type="Panel" parent="Control"]
-modulate = Color(0.73, 0.73, 0.73, 1)
+modulate = Color(0.729412, 0.729412, 0.729412, 0)
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 0
 offset_top = 40.0

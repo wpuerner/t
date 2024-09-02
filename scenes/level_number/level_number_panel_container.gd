@@ -20,3 +20,6 @@ func deactivate():
 	is_active = false
 	animation_player.play("deactivate")
 	create_tween().tween_property(panel, "modulate", Color("bababa"), 0.3)
+
+func initialize():
+	create_tween().tween_property(panel, "modulate", Color("bababa"), 0.25)
