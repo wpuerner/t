@@ -17,22 +17,11 @@ resource_name = "activate"
 length = 0.35
 tracks/0/type = "bezier"
 tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("Panel:position:x")
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Panel:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(40, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.3)
@@ -43,22 +32,11 @@ resource_name = "bump"
 length = 0.3
 tracks/0/type = "bezier"
 tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("Panel:position:x")
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Panel:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.05, 0, -20, -0.05, 0, 0.0149062, 0, 0, -0.05, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.2, 0.25)
@@ -69,22 +47,11 @@ resource_name = "deactivate"
 length = 0.35
 tracks/0/type = "bezier"
 tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("Panel:position:x")
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Panel:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 40, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.3)
@@ -129,9 +96,8 @@ size_flags_horizontal = 3
 modulate = Color(0.729412, 0.729412, 0.729412, 0)
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 0
-offset_top = 40.0
 offset_right = 40.0
-offset_bottom = 162.0
+offset_bottom = 122.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qxo6b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
