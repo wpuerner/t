@@ -1,11 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://menmcythox1n"]
 
 [ext_resource type="Script" path="res://scenes/level_number/level_number.gd" id="2_ly1gu"]
+[ext_resource type="Gradient" uid="uid://be1djnc4oh8gq" path="res://scenes/level_number/level_number.tres" id="2_ud7c3"]
 [ext_resource type="PackedScene" uid="uid://b3fgfe6lrac76" path="res://scenes/level_number/level_number_panel_container.tscn" id="2_xj10n"]
-
-[sub_resource type="Gradient" id="Gradient_3m17c"]
-offsets = PackedFloat32Array(0, 0.301075, 0.650538, 1)
-colors = PackedColorArray(1, 0.55, 0, 1, 0.866667, 1, 0, 1, 0.15, 1, 0, 1, 0, 1, 0.95, 1)
 
 [node name="LevelNumber" type="MarginContainer"]
 anchors_preset = 15
@@ -16,7 +13,7 @@ grow_vertical = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 script = ExtResource("2_ly1gu")
-gradient = SubResource("Gradient_3m17c")
+gradient = ExtResource("2_ud7c3")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 150)

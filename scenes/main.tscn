@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bh5i5k4x644hk"]
+[gd_scene load_steps=10 format=3 uid="uid://bh5i5k4x644hk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_sylqq"]
 [ext_resource type="PackedScene" uid="uid://ch246int2jhqm" path="res://scenes/key/key.tscn" id="2_5ynkg"]
@@ -9,21 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://d33qvy7pddp52" path="res://scenes/measure_number/measure_number.tscn" id="7_sqj8x"]
 [ext_resource type="PackedScene" uid="uid://dltte2m6gglhe" path="res://scenes/end_game.tscn" id="9_bggyk"]
 [ext_resource type="PackedScene" uid="uid://menmcythox1n" path="res://scenes/level_number/level_number.tscn" id="9_k6c3f"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grcr3"]
-bg_color = Color(1, 0.739, 0.42, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(1, 0.641667, 0.14, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-shadow_color = Color(0, 0, 0, 0.690196)
-shadow_size = 4
-shadow_offset = Vector2(-2, 2)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_sylqq")
@@ -60,20 +45,3 @@ mouse_filter = 2
 z_index = -1
 position = Vector2(250, 251)
 scale = Vector2(1e-05, 1e-05)
-
-[node name="CenterContainer" type="CenterContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureButton" type="Button" parent="CenterContainer"]
-custom_minimum_size = Vector2(200, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_grcr3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_grcr3")
-text = "Play"
-
-[connection signal="pressed" from="CenterContainer/TextureButton" to="." method="_on_texture_button_pressed"]

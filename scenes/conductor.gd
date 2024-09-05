@@ -23,6 +23,10 @@ var callbacks_index: int = 0
 var queue_stop: bool = false
 var stopped: bool = false
 
+func _ready():
+	for loop in LOOPS:
+		AudioServer.register_stream_as_sample(loop)
+
 func start():
 	callbacks.sort_custom(func(a: Callback, b: Callback): return a.trigger_at < b.trigger_at)
 	finished.connect(_handle_looping)

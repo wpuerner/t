@@ -10,11 +10,13 @@ extends Node
 @onready var end_game_screen = $EndGame
 
 const HIT_THRESHOLD_SECS: float = 0.15
+const HAND_TAP_DELAY: float = -0.05
 
-var level: int = 9:
+var level: int = 0:
 	set(value):
 		level = value
 		level_number.set_level_number(level)
+		measure_number.set_level_number(level)
 		conductor.queue_loop(level)
 		if level > 9:
 			_end_game()
@@ -33,22 +35,19 @@ var s_key_active: bool = false:
 	set(value):
 		s_key_active = value
 		_update_s_key_state(s_key_active)
-var good_measure: bool = true:
-	set(v):
-		good_measure = true
+var good_measure: bool = true
 var total_beats: int = 0
 
 func _ready():
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.2, _twitch)
-	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.05, _left_hand_tap_callable)
-	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), -0.25, func(beat): if t_player_beats[level].has(beat): t_key.wiggle())
+	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), HAND_TAP_DELAY, _left_hand_tap_callable)
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), 0, _t_key_callable)
 	conductor.register_callback(PackedFloat32Array([0, 1, 2, 3]), HIT_THRESHOLD_SECS, _check_t_beat)
-	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), -0.05, _right_hand_tap_callable)
-	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), -0.25, func(beat): if s_key_active and s_player_beats[level].has(beat): s_key.wiggle())
+	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), HAND_TAP_DELAY, _right_hand_tap_callable)
 	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), 0, _s_key_callable)
 	conductor.register_callback(PackedFloat32Array([0.5, 1.5, 2.5, 3.5]), HIT_THRESHOLD_SECS, _check_s_beat)
-	conductor.register_callback(PackedFloat32Array([4]), -0.09, _check_measure)
+	conductor.register_callback(PackedFloat32Array([4]), -0.08, _check_measure)
+	_init_game()
 
 func _twitch(_beat):
 	measure_number.twitch()
@@ -136,15 +135,16 @@ func _instantiate_green_circle(instantiate_at: Vector2):
 	add_child(node)
 
 
-func _on_texture_button_pressed():
-	find_child("TextureButton").visible = false
+func _init_game():
 	var tween: Tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(left_hand, "position", Vector2(250, 240), 1.0)
 	tween.tween_property(measure_number, "scale", Vector2.ONE, 1.0)
 	tween.tween_property(t_key, "scale", Vector2.ONE, 1.0)
 	level_number.initialize()
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(2.0-HAND_TAP_DELAY).timeout
+	left_hand.tap()
+	await get_tree().create_timer(HAND_TAP_DELAY).timeout
 	conductor.start()
 
 func _end_game():

@@ -1,13 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d33qvy7pddp52"]
+[gd_scene load_steps=6 format=3 uid="uid://d33qvy7pddp52"]
 
 [ext_resource type="Script" path="res://scenes/measure_number/measure_number.gd" id="1_4ohqg"]
+[ext_resource type="Gradient" uid="uid://be1djnc4oh8gq" path="res://scenes/level_number/level_number.tres" id="2_r47yx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xoux1"]
-bg_color = Color(1, 0.583333, 0, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+bg_color = Color(1, 1, 1, 1)
 border_color = Color(1, 0.75, 0.4, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -37,6 +34,7 @@ _data = {
 
 [node name="MeasureNumber" type="Node2D"]
 script = ExtResource("1_4ohqg")
+gradient = ExtResource("2_r47yx")
 
 [node name="PanelContainer3" type="Node2D" parent="."]
 
@@ -71,6 +69,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_xoux1")
 [node name="PanelContainer0" type="Node2D" parent="."]
 
 [node name="Panel" type="Panel" parent="PanelContainer0"]
+modulate = Color(1, 0.443137, 1, 1)
 offset_left = -4.0
 offset_top = 4.0
 offset_right = 56.0
