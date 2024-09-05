@@ -22,8 +22,10 @@ var callbacks: Array[Callback]
 var callbacks_index: int = 0
 var queue_stop: bool = false
 var stopped: bool = false
+var current_time: float = 0
 
 func _ready():
+	set_physics_process(false)
 	for loop in LOOPS:
 		AudioServer.register_stream_as_sample(loop)
 
@@ -31,13 +33,16 @@ func start():
 	callbacks.sort_custom(func(a: Callback, b: Callback): return a.trigger_at < b.trigger_at)
 	finished.connect(_handle_looping)
 	stream = LOOPS[loop_index]
+	current_time = 0
+	set_physics_process(true)
 	play()
 	
 func done():
 	set_physics_process(false)
 	queue_stop = true
 
-func _physics_process(_delta):
+func _physics_process(delta: float):
+	current_time += delta
 	var beat = _get_beat()
 	if callbacks_index < callbacks.size() and _get_beat() > callbacks[callbacks_index].trigger_at:
 		var callback = callbacks[callbacks_index]
@@ -46,6 +51,7 @@ func _physics_process(_delta):
 
 func _handle_looping():
 	if stopped: return
+	current_time = 0
 	callbacks_index = 0
 	stream = LOOPS[loop_index]
 	play()
@@ -80,7 +86,7 @@ func register_callback(beats: Array[float], offset_sec: float, callable: Callabl
 		callbacks.append(_create_callback(beat, trigger_at, callable))
 
 func _get_beat() -> float:
-	return (get_playback_position() + AudioServer.get_time_since_last_mix() + AudioServer.get_output_latency()) / SECONDS_PER_BEAT
+	return (current_time + AudioServer.get_output_latency()) / SECONDS_PER_BEAT
 
 func _create_callback(beat, trigger_at, callable):
 	var callback = Callback.new()
